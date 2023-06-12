@@ -18,15 +18,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password':{'write_only':True},
             'email': {'validators': [clean_email]},        
-            
         }
-       
 
-    def create(self, validated_data):
-        del validated_data['password2']
-        User.objects.create(**validated_data)
-        
-        
 
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -39,4 +32,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("username cannot be admin")
         return value
             
+    def create(self, validated_data):
+        del validated_data['password2']
+        User.objects.create(**validated_data)
     

@@ -9,11 +9,11 @@ from .serializers import UserRegisterSerializer
 class UserRegisterView(APIView):
     
     def post(self, request):
-        ser_data = UserRegisterSerializer(data=request.POST)
-        if ser_data.is_valid():
-            ser_data.create(ser_data.validated_data)
-            return Response(ser_data.data, status.HTTP_201_CREATED)
-        return Response(ser_data.errors, status.HTTP_400_BAD_REQUEST)
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.create(serializer.validated_data)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
     
 
 
